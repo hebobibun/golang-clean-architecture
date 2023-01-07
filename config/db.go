@@ -2,6 +2,7 @@ package config
 
 import (
 	"fmt"
+	"go-clean-arch/features/user/data"
 	"log"
 
 	"gorm.io/driver/mysql"
@@ -21,5 +22,5 @@ func InitDB(ac AppConfig) *gorm.DB {
 }
 
 func Migrate(db *gorm.DB) {
-	db.AutoMigrate()
+	db.AutoMigrate(data.User{})
 }
