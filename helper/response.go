@@ -1,37 +1,16 @@
-package handler
+package helper
 
 import (
-	"go-clean-arch/features/user"
 	"net/http"
 	"strings"
 )
 
-type UserResponse struct {
-	ID uint `json:"id"`
-	Name string `json:"name"`
-	Email string `json:"email"`
-	HP string `json:"hp"`
-	Role string `json:"role"`
-	Address string `json:"address"`
-}
-
-func ToResponse(data user.Core) UserResponse {
-	return UserResponse{
-		ID: data.ID,
-		Name: data.Name,
-		Email: data.Email,
-		HP: data.HP,
-		Role: data.Role,
-		Address: data.Address,
-	}
-}
-
 func PrintSuccessReponse(code int, message string, data ...interface{}) (int, interface{}) {
 	resp := map[string]interface{}{}
 	if len(data) < 2 {
-		resp["data"] = ToResponse(data[0].(user.Core))
+		resp["data"] = data[0]
 	} else {
-		resp["data"] = ToResponse(data[0].(user.Core))
+		resp["data"] = data[0]
 		resp["token"] = data[1].(string)
 	}
 

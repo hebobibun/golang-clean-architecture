@@ -8,6 +8,7 @@ type Core struct {
 	Email string
 	HP string
 	Address string
+	Role string
 	Password string
 }
 

@@ -3,16 +3,16 @@ package handler
 import "go-clean-arch/features/user"
 
 type RegisterRequest struct {
-	Name string `json:"name"`
-	Email string `json:"email"`
-	HP string `json:"hp"`
-	Address string `json:"address"`
-	Password string `json:"password"`
+	Name string `json:"name" form:"name"`
+	Email string `json:"email" form:"email"`
+	HP string `json:"hp" form:"hp"`
+	Address string `json:"address" form:"address"`
+	Password string `json:"password" form:"password"`
 }
 
 type LoginRequest struct {
-	Email string `json:"email"`
-	Password string `json:"password"`
+	Email string `json:"email"  form:"email"`
+	Password string `json:"password" form:"password"`
 }
 
 func ToCore(data interface{}) *user.Core {

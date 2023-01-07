@@ -30,7 +30,7 @@ func (uuc *userUseCase) Register(newUser user.Core) (user.Core, error) {
 		return user.Core{}, errors.New("Unable to process password")
 	}
 	newUser.Password = string(hashed)
-	res, err := uuc.Register(newUser)
+	res, err := uuc.qry.Register(newUser)
 	if err != nil {
 		msg := ""
 		if strings.Contains(err.Error(), "duplicated") {

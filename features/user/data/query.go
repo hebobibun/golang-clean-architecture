@@ -32,7 +32,7 @@ func (uq *userQuery) Register(newUser user.Core) (user.Core, error) {
 }
 
 func (uq *userQuery) Login(email string) (user.Core, error) {
-	res := User{}
+	res := Users{}
 
 	if err := uq.db.Where("email = ?", email).First(&res).Error; err != nil {
 		log.Println("login query error : ", err.Error())
@@ -43,7 +43,7 @@ func (uq *userQuery) Login(email string) (user.Core, error) {
 }
 
 func (uq *userQuery) Profile(id uint) (user.Core, error) {
-	res := User{}
+	res := Users{}
 	if err := uq.db.Where("id = ?", id).First(&res).Error; err != nil {
 		log.Println("Get profile by ID query error : ", err.Error())
 		return user.Core{}, err

@@ -30,6 +30,8 @@ func (uc *userControll) Register() echo.HandlerFunc {
 			return c.JSON(PrintErrorResponse(err.Error()))
 		}
 
+		res.Role = "member"
+
 		return c.JSON(PrintSuccessReponse(http.StatusCreated, "Registered a new account Successfully", res))
 	}
 }
