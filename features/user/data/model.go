@@ -12,7 +12,6 @@ type User struct {
 	Email string
 	HP string
 	Address string
-	Role string
 	Password string
 }
 
@@ -23,7 +22,6 @@ func ToCore(data User) user.Core {
 		Email: data.Email,
 		HP: data.HP,
 		Address: data.Address,
-		Role: data.Role,
 		Password: data.Password,
 	}
 }
@@ -35,7 +33,6 @@ func CoreToData(data user.Core) User {
 		Email: data.Email,
 		HP: data.HP,
 		Address: data.Address,
-		Role: data.Role,
 		Password: data.Password,
 	}
 }

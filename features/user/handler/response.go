@@ -22,7 +22,6 @@ func ToResponse(data user.Core) UserResponse {
 		Email: data.Email,
 		HP: data.HP,
 		Address: data.Address,
-		Role: data.Role,
 	}
 }
 

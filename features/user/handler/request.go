@@ -7,7 +7,6 @@ type RegisterRequest struct {
 	Email string `json:"email"`
 	HP string `json:"hp"`
 	Address string `json:"address"`
-	Role string `json:"role"`
 	Password string `json:"password"`
 }
 
@@ -26,7 +25,6 @@ func ToCore(data interface{}) *user.Core {
 		res.Email = cnv.Email
 		res.HP = cnv.HP
 		res.Address = cnv.Address
-		res.Role = cnv.Role
 		res.Password = cnv.Password
 	case LoginRequest:
 		cnv := data.(LoginRequest)
