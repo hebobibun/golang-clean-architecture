@@ -1,9 +1,9 @@
-# CleanArch
+# Golang Clean Architecture
 
-Clean Architecture with Golang
+In this Golang REST API project, I am trying to follow clean architecture principles. It is designed to be modular, scalable, and easy to maintain. The code is organized into logical layers, with each layer having a specific responsibility. This separation of concerns makes it easier to understand and modify the code, as well as perform testing and debugging.
 # Features
 ## User : 
-- Register anew user
+- Register a new user
 - Login user
 - Show profile
 - Update profile
@@ -21,7 +21,7 @@ Clean Architecture with Golang
 
 # Tools & Requirements
 
-- Go 1.19.3
+- Go 1.19.x
 - Gorm & MySQL
 - Echo v4
 - JWT
@@ -61,13 +61,13 @@ Clean Architecture with Golang
 - Clone it
 
 ```
-$ git clone https://github.dev/ALTA-BE14-Habib/CleanArch
+$ git clone https://github.com/hebobibun/golang-clean-architecture
 ```
 
 - Go to directory
 
 ```
-$ cd CleanArch
+$ cd golang-clean-architecture
 ```
 
 - Create a new database
@@ -80,3 +80,7 @@ $ cd CleanArch
 ```
 $ go run .
 ```
+
+## Enjoy
+
+Keep learning! ^^
