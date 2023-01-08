@@ -113,3 +113,19 @@ func (bs *bookSrv) Update(token interface{}, bookID uint, updatedData book.Core)
 
 	return res, nil
 }
+
+func (bs *bookSrv) Delete(token interface{}, bookID uint) error {
+	id := helper.ExtractToken(token)
+
+	if id <= 0 {
+		return errors.New("Data not found")
+	}
+
+	err := bs.data.Delete(uint(id), bookID)
+	if err != nil {
+		log.Println("Delete query error : ", err.Error())
+		return err
+	}
+
+	return nil
+}

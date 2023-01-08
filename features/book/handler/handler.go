@@ -90,3 +90,26 @@ func (bc *bookControll) Update() echo.HandlerFunc {
 		return c.JSON(helper.PrintSuccessReponse(http.StatusCreated, "Updated a book successfully", res))
 	}
 }
+
+func (bc *bookControll) Delete() echo.HandlerFunc {
+	return func(c echo.Context) error {
+		token := c.Get("user")
+
+		paramID := c.Param("id")
+		bookID, err := strconv.Atoi(paramID)
+		if err != nil {
+			log.Println("Convert id error : ", err.Error())
+			return c.JSON(http.StatusBadRequest, map[string]interface{}{
+				"message": "Please input number only",
+			})
+		}
+
+		err = bc.srv.Delete(token, uint(bookID))
+		
+		if err != nil {
+			return c.JSON(helper.PrintErrorResponse(err.Error()))
+		}
+
+		return c.JSON(http.StatusAccepted, "Deleted a book successfully")
+	}
+}

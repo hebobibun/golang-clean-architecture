@@ -80,3 +80,29 @@ func (bd *bookData) Update(userID uint, bookID uint, updatedData book.Core) (boo
 
 	return updatedData, nil
 }
+
+func (bd *bookData) Delete(userID uint, bookID uint) (error) {
+	getID := Books{}
+	err := bd.db.Where("id = ?", bookID).First(&getID).Error
+
+	if err != nil {
+		log.Println("Get book error : ", err.Error())
+		return errors.New("Failed to get book data")
+	}
+
+	if getID.UserID != userID {
+		log.Println("Unauthorized request")
+		return errors.New("Unauthorized request")
+	}
+
+	qryDelete := bd.db.Delete(&Books{}, bookID)
+
+	affRow := qryDelete.RowsAffected
+
+	if affRow <= 0 {
+		log.Println("No rows affected")
+		return errors.New("Failed to delete, data not found")
+	}
+
+	return nil
+}

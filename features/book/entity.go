@@ -16,6 +16,7 @@ type BookHandler interface {
 	MyBook() echo.HandlerFunc
 	BookList() echo.HandlerFunc
 	Update() echo.HandlerFunc
+	Delete() echo.HandlerFunc
 }
 
 type BookService interface {
@@ -23,6 +24,7 @@ type BookService interface {
 	MyBook(token interface{}) ([]Core, error)
 	BookList() ([]Core, error)
 	Update(token interface{}, bookID uint, updatedData Core) (Core, error)
+	Delete(token interface{}, bookID uint) (error)
 }
 
 type BookData interface {
@@ -30,4 +32,5 @@ type BookData interface {
 	MyBook(userID uint) ([]Core, error)
 	BookList() ([]Core, error)
 	Update(userID uint, bookID uint, updatedData Core) (Core, error)
+	Delete(userID, bookID uint) (error)
 }

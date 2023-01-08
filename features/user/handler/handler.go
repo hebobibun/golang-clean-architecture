@@ -93,6 +93,6 @@ func (uc *userControll) Deactivate() echo.HandlerFunc {
 			return c.JSON(PrintErrorResponse(err.Error()))
 		}
 
-		return c.JSON(http.StatusAccepted, "Deactivate your account successfully")
+		return c.JSON(http.StatusAccepted, "Deactivated your account successfully")
 	}
 }
