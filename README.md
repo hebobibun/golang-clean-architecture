@@ -10,6 +10,7 @@ Clean Architecture with Golang
 - Deactivate account
 ## Book :
 - Insert a new book
+- Show all books in the system
 - Show all my books
 - Show one of my book
 - Update book information
