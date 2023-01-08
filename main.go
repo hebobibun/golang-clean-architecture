@@ -41,6 +41,9 @@ func main() {
 	auth.Use(middleware.JWT([]byte(config.JWTKey)))
 
 	auth.GET("/profile", userHdl.Profile())
+	auth.PATCH("/profile/update", userHdl.Update())
+	auth.DELETE("/profile/deactivate", userHdl.Deactivate())
+
 	auth.POST("/books/add", bookHdl.Add())
 
 	if err := e.Start(":8000"); err != nil {

@@ -50,3 +50,28 @@ func (uq *userQuery) Profile(id uint) (user.Core, error) {
 	}
 	return ToCore(res), nil
 }
+
+func (uq *userQuery) Update(updatedProfile user.Core) (user.Core, error) {
+	qry := uq.db.Model(Users{}).Where("id = ?", updatedProfile.ID).Updates(updatedProfile)
+	err := qry.Error
+
+	if err != nil {
+		log.Println("update query error : ", err.Error())
+		return user.Core{}, errors.New("Unable to update profile")
+	}
+
+	return updatedProfile, nil
+}
+
+func (uq *userQuery) Deactivate(id uint) (error) {
+	qryDelete := uq.db.Delete(&Users{}, id)
+
+	affRow := qryDelete.RowsAffected
+
+	if affRow <= 0 {
+		log.Println("No rows affected")
+		return errors.New("Failed to delete, data not found")
+	}
+
+	return nil
+}

@@ -11,7 +11,6 @@ type UserResponse struct {
 	Name string `json:"name"`
 	Email string `json:"email"`
 	HP string `json:"hp"`
-	Role string `json:"role"`
 	Address string `json:"address"`
 }
 
@@ -21,7 +20,6 @@ func ToResponse(data user.Core) UserResponse {
 		Name: data.Name,
 		Email: data.Email,
 		HP: data.HP,
-		Role: data.Role,
 		Address: data.Address,
 	}
 }

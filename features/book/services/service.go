@@ -48,10 +48,9 @@ func (bs *bookSrv) Add(token interface{}, newBook book.Core) (book.Core, error) 
 	}
 
 	return res, nil
-
 }
 
 func (bs *bookSrv) Update(token interface{}, bookID int, updatedData book.Core) (book.Core, error) {
-	
+
 	return book.Core{}, nil
 }

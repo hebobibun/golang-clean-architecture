@@ -30,8 +30,6 @@ func (uc *userControll) Register() echo.HandlerFunc {
 			return c.JSON(PrintErrorResponse(err.Error()))
 		}
 
-		res.Role = "member"
-
 		return c.JSON(PrintSuccessReponse(http.StatusCreated, "Registered a new account Successfully", res))
 	}
 }
@@ -65,5 +63,36 @@ func (uc *userControll) Profile() echo.HandlerFunc {
 		}
 
 		return c.JSON(PrintSuccessReponse(http.StatusOK, "Displayed your profile successfully", res))
+	}
+}
+
+func (uc *userControll) Update() echo.HandlerFunc {
+	return func(c echo.Context) error {
+		token := c.Get("user")
+
+		input := UpdateRequest{}
+		if err := c.Bind(&input); err != nil {
+			return c.JSON(http.StatusBadRequest, "Please input correctly")
+		}
+
+		res, err := uc.srv.Update(token, *ToCore(input))
+		if err != nil {
+			return c.JSON(PrintErrorResponse(err.Error()))
+		}
+
+		return c.JSON(http.StatusAccepted, ToResponse(res))
+	}
+}
+
+func (uc *userControll) Deactivate() echo.HandlerFunc {
+	return func(c echo.Context) error {
+		token := c.Get("user")
+
+		err := uc.srv.Deactivate(token)
+		if err != nil {
+			return c.JSON(PrintErrorResponse(err.Error()))
+		}
+
+		return c.JSON(http.StatusAccepted, "Deactivate your account successfully")
 	}
 }

@@ -88,3 +88,48 @@ func (uuc *userUseCase) Profile(token interface{}) (user.Core, error) {
 	}
 	return res, nil
 }
+
+func (uuc *userUseCase) Update(token interface{}, updatedProfile user.Core) (user.Core, error) {
+	id := helper.ExtractToken(token)
+
+	if id <= 0 {
+		return user.Core{}, errors.New("Data not found")
+	}
+
+	updatedProfile.ID = uint(id)
+
+	res, err := uuc.qry.Update(updatedProfile)
+	if err != nil {
+		msg := ""
+		if strings.Contains(err.Error(), "not found") {
+			msg = "Data not found"
+		} else {
+			msg = "There is a problem with the server"
+		}
+		return user.Core{}, errors.New(msg)
+	}
+
+	return res, nil
+}
+
+func (uuc *userUseCase) Deactivate(token interface{}) (error) {
+	id := helper.ExtractToken(token)
+
+	if id <= 0 {
+		return errors.New("Data not found")
+	}
+
+	err := uuc.qry.Deactivate(uint(id))
+	if err != nil {
+		msg := ""
+		if strings.Contains(err.Error(), "not found") {
+			msg = "Data not found"
+		} else {
+			msg = "There is a problem with the server"
+		}
+		return errors.New(msg)
+	}
+
+	return nil
+}
+
