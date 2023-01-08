@@ -33,3 +33,21 @@ func CoreToData(data book.Core) Books {
 		UserID: data.UserID,
 	}
 }
+
+func (dataModel *Books) ModelsToCore() book.Core { 
+	return book.Core{
+		ID: dataModel.ID,
+		Title: dataModel.Title,
+		Year: dataModel.Year,
+		Author: dataModel.Author,
+		UserID: dataModel.UserID,
+	}
+}
+
+func ListToCore(data []Books) []book.Core {
+	var dataCore []book.Core
+	for _, v := range data {
+		dataCore = append(dataCore, v.ModelsToCore())
+	}
+	return dataCore
+}

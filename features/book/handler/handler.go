@@ -38,6 +38,19 @@ func (bc *bookControll) Add() echo.HandlerFunc {
 	}
 }
 
+func (bc *bookControll) Show() echo.HandlerFunc {
+	return func(c echo.Context) error {
+		token := c.Get("user")
+
+		res, err := bc.srv.Show(token)
+		if err != nil {
+			return c.JSON(helper.PrintErrorResponse(err.Error()))
+		}
+
+		return c.JSON(helper.PrintSuccessReponse(http.StatusCreated, "Displayed your books successfully", ListCoreToResp(res)))
+	}
+}
+
 // func (bc *bookControll) Update() echo.HandlerFunc {
 // 	return func(c echo.Context) error {
 // 		token := c.Get("user")

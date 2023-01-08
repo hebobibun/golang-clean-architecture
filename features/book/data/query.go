@@ -19,7 +19,7 @@ func New(db *gorm.DB) book.BookData {
 	}
 }
 
-func (bd *bookData) Add(userID int, newBook book.Core) (book.Core, error) {
+func (bd *bookData) Add(userID uint, newBook book.Core) (book.Core, error) {
 	cnv := CoreToData(newBook)
 	cnv.UserID = uint(userID)
 	err := bd.db.Create(&cnv).Error
@@ -32,7 +32,17 @@ func (bd *bookData) Add(userID int, newBook book.Core) (book.Core, error) {
 	return newBook, nil
 }
 
-func (bd *bookData) Update(bookID int, updatedData book.Core) (book.Core, error) {
+func (bd *bookData) Show(userID uint) ([]book.Core, error) {
+	res := []Books{}
+	if err := bd.db.Where("user_id = ?", userID).Find(&res).Error; err != nil {
+		log.Println("Get profile by ID query error : ", err.Error())
+		return []book.Core{}, err
+	}
+
+	return ListToCore(res), nil
+}
+
+func (bd *bookData) Update(bookID uint, updatedData book.Core) (book.Core, error) {
 	cnv := CoreToData(updatedData)
 	qry := bd.db.Where("id = ?", bookID).Updates(&cnv)
 	if qry.RowsAffected <= 0 {

@@ -12,15 +12,18 @@ type Core struct {
 
 type BookHandler interface {
 	Add() echo.HandlerFunc
+	Show() echo.HandlerFunc
 	// Update() echo.HandlerFunc
 }
 
 type BookService interface {
 	Add(token interface{}, newBook Core) (Core, error)
+	Show(token interface{}) ([]Core, error)
 	// Update(token interface{}, bookID int, updatedData Core) (Core, error)
 }
 
 type BookData interface {
-	Add(userID int, newBook Core) (Core, error)
+	Add(userID uint, newBook Core) (Core, error)
+	Show(userID uint) ([]Core, error)
 	// Update(bookID int, updatedData Core) (Core, error)
 }

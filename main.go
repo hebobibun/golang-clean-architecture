@@ -44,6 +44,7 @@ func main() {
 	auth.PATCH("/profile/update", userHdl.Update())
 	auth.DELETE("/profile/deactivate", userHdl.Deactivate())
 
+	auth.GET("/books/my", bookHdl.Show())
 	auth.POST("/books/add", bookHdl.Add())
 
 	if err := e.Start(":8000"); err != nil {

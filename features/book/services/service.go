@@ -36,7 +36,7 @@ func (bs *bookSrv) Add(token interface{}, newBook book.Core) (book.Core, error) 
 		return book.Core{}, errors.New("Please input correctly")
 	}
 
-	res, err := bs.data.Add(userID, newBook)
+	res, err := bs.data.Add(uint(userID), newBook)
 	if err != nil {
 		msg := ""
 		if strings.Contains(err.Error(), "not found") {
@@ -48,6 +48,27 @@ func (bs *bookSrv) Add(token interface{}, newBook book.Core) (book.Core, error) 
 	}
 
 	res.UserID = uint(userID)
+
+	return res, nil
+}
+
+func (bs *bookSrv) Show(token interface{}) ([]book.Core, error) {
+	userID := helper.ExtractToken(token)
+
+	if userID <= 0 {
+		return []book.Core{}, errors.New("User not found")
+	}
+
+	res, err := bs.data.Show(uint(userID))
+	if err != nil {
+		msg := ""
+		if strings.Contains(err.Error(), "not found") {
+			msg = "Book not found"
+		} else {
+			msg = "There's a server eror"
+		}
+		return []book.Core{}, errors.New(msg)
+	}
 
 	return res, nil
 }

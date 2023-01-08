@@ -19,3 +19,22 @@ func ToResponse(data book.Core) BookResponse {
 		UserID: data.UserID,
 	}
 }
+
+func CoresToResponse(dataCore book.Core) BookResponse {
+	return BookResponse{
+		ID: dataCore.ID,
+		Title: dataCore.Title,
+		Year: dataCore.Year,
+		Author: dataCore.Author,
+		UserID: dataCore.UserID,
+	}
+}
+
+func ListCoreToResp(data []book.Core) []BookResponse{
+	var dataResp []BookResponse
+	for _, v := range data {
+		dataResp = append(dataResp, CoresToResponse(v))
+	}
+	return dataResp
+}
+
