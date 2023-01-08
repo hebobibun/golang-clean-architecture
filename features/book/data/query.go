@@ -42,18 +42,31 @@ func (bd *bookData) Show(userID uint) ([]book.Core, error) {
 	return ListToCore(res), nil
 }
 
-func (bd *bookData) Update(bookID uint, updatedData book.Core) (book.Core, error) {
+func (bd *bookData) Update(userID uint, bookID uint, updatedData book.Core) (book.Core, error) {
+	getID := Books{}
+	err := bd.db.Where("id = ?", bookID).First(&getID).Error
+	
+	if err != nil {
+		log.Println("Get book error : ", err.Error())
+		return book.Core{}, err
+	}
+	
+	if getID.UserID != userID {
+		log.Println("Unauthorized request")
+		return book.Core{}, errors.New("Unauthorized request")
+	}
+	
 	cnv := CoreToData(updatedData)
-	qry := bd.db.Where("id = ?", bookID).Updates(&cnv)
-	if qry.RowsAffected <= 0 {
+	qryUpdate := bd.db.Where("id = ?", bookID).Updates(&cnv)
+	if qryUpdate.RowsAffected <= 0 {
 		log.Println("update book query error : data not found")
 		return book.Core{}, errors.New("not found")
 	}
 
-	if err := qry.Error; err != nil {
+	if err := qryUpdate.Error; err != nil {
 		log.Println("update book query error :", err.Error())
 		return book.Core{}, err
 	}
 
-	return ToCore(cnv), nil
+	return updatedData, nil
 }

@@ -73,7 +73,28 @@ func (bs *bookSrv) Show(token interface{}) ([]book.Core, error) {
 	return res, nil
 }
 
-func (bs *bookSrv) Update(token interface{}, bookID int, updatedData book.Core) (book.Core, error) {
+func (bs *bookSrv) Update(token interface{}, bookID uint, updatedData book.Core) (book.Core, error) {
+	id := helper.ExtractToken(token)
 
-	return book.Core{}, nil
+	if id <= 0 {
+		return book.Core{}, errors.New("Data not found")
+	}
+
+	res, err := bs.data.Update(uint(id), bookID, updatedData)
+	if err != nil {
+		msg := ""
+		if strings.Contains(err.Error(), "not found") {
+			msg = "Failed to update, no new record or data not found"
+		} else if strings.Contains(err.Error(), "Unauthorized") {
+			msg = "Unauthorized request"
+		} else {
+			msg = "There is a problem with the server"
+		}
+		return book.Core{}, errors.New(msg)
+	}
+
+	res.ID = bookID
+	res.UserID = uint(id)
+
+	return res, nil
 }

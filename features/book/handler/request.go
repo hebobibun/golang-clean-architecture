@@ -23,6 +23,11 @@ func ToCore(data interface{}) *book.Core {
 		res.Title = cnv.Title
 		res.Year = cnv.Year
 		res.Author = cnv.Author
+	case UpdateBookRequest:
+		cnv := data.(UpdateBookRequest)
+		res.Title = cnv.Title
+		res.Year = cnv.Year
+		res.Author = cnv.Author
 	default:
 		return nil
 	}

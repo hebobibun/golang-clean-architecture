@@ -52,7 +52,8 @@ func (uq *userQuery) Profile(id uint) (user.Core, error) {
 }
 
 func (uq *userQuery) Update(updatedProfile user.Core) (user.Core, error) {
-	qry := uq.db.Model(Users{}).Where("id = ?", updatedProfile.ID).Updates(updatedProfile)
+	cnvUpdated := CoreToData(updatedProfile)
+	qry := uq.db.Model(Users{}).Where("id = ?", cnvUpdated.ID).Updates(cnvUpdated)
 	err := qry.Error
 
 	affRow := qry.RowsAffected
@@ -67,7 +68,7 @@ func (uq *userQuery) Update(updatedProfile user.Core) (user.Core, error) {
 		return user.Core{}, errors.New("Unable to update profile")
 	}
 
-	return updatedProfile, nil
+	return ToCore(cnvUpdated), nil
 }
 
 func (uq *userQuery) Deactivate(id uint) (error) {

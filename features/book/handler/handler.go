@@ -5,6 +5,7 @@ import (
 	"go-clean-arch/helper"
 	"log"
 	"net/http"
+	"strconv"
 
 	"github.com/labstack/echo/v4"
 )
@@ -51,20 +52,30 @@ func (bc *bookControll) Show() echo.HandlerFunc {
 	}
 }
 
-// func (bc *bookControll) Update() echo.HandlerFunc {
-// 	return func(c echo.Context) error {
-// 		token := c.Get("user")
+func (bc *bookControll) Update() echo.HandlerFunc {
+	return func(c echo.Context) error {
+		token := c.Get("user")
 		
-// 		input := UpdateBookRequest{}
-// 		if err := c.Bind(&input); err != nil {
-// 			return c.JSON(http.StatusBadRequest, "Please input correctly")
-// 		}
+		paramID := c.Param("id")
+		bookID, err := strconv.Atoi(paramID)
+		if err != nil {
+			log.Println("Convert id error : ", err.Error())
+			return c.JSON(http.StatusBadRequest, map[string]interface{}{
+				"message": "Please input number only",
+			})
+		}
 
-// 		res, err := bc.srv.Update(token)
+		input := UpdateBookRequest{}
+		if err := c.Bind(&input); err != nil {
+			return c.JSON(http.StatusBadRequest, "Please input correctly")
+		}
 
-// 		if err != nil {
-// 			return c.JSON(helper.PrintErrorResponse(err.Error()))
-// 		}
+		res, err := bc.srv.Update(token, uint(bookID), *ToCore(input))
 
-// 	}
-// }
+		if err != nil {
+			return c.JSON(helper.PrintErrorResponse(err.Error()))
+		}
+
+		return c.JSON(helper.PrintSuccessReponse(http.StatusCreated, "Updated a book successfully", res))
+	}
+}

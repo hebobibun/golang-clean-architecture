@@ -46,6 +46,7 @@ func main() {
 
 	auth.GET("/books/my", bookHdl.Show())
 	auth.POST("/books/add", bookHdl.Add())
+	auth.PATCH("/books/update/:id", bookHdl.Update())
 
 	if err := e.Start(":8000"); err != nil {
 		log.Println(err.Error())
