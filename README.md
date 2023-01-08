@@ -26,6 +26,36 @@ Clean Architecture with Golang
 - Echo v4
 - JWT
 
+## Folder Structure Pattern
+```
+├── config
+│   └── config.go
+│   └── db.go
+└── features
+│   └── book
+│   │   └── data
+│   │   │   └── model.go
+│   │   │   └── query.go
+│   │   └── handler
+│   │   │   └── handler.go
+│   │   │   └── request.go
+│   │   │   └── response.go
+│   │   └── services
+│   │   │   └── service_test.go
+│   │   │   └── service.go
+│   │   └── entity.go
+└── helper
+│   └── jwt.go
+│   └── response.go
+├── .gitignore
+├── go.mod
+├── go.sum
+├── LICENSE
+├── local.env.example
+├── main.go
+├── README.md
+```
+
 ## How to Install
 
 - Clone it
