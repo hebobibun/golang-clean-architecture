@@ -102,7 +102,7 @@ func (uuc *userUseCase) Update(token interface{}, updatedProfile user.Core) (use
 	if err != nil {
 		msg := ""
 		if strings.Contains(err.Error(), "not found") {
-			msg = "Data not found"
+			msg = "Failed to update, no new record or data not found"
 		} else {
 			msg = "There is a problem with the server"
 		}

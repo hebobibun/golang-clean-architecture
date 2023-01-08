@@ -34,9 +34,7 @@ func (bc *bookControll) Add() echo.HandlerFunc {
 			return c.JSON(helper.PrintErrorResponse(err.Error()))
 		}
 
-		finRes := ToResponse(res)
-
-		return c.JSON(helper.PrintSuccessReponse(http.StatusCreated, "Added a new book successfully", finRes))
+		return c.JSON(helper.PrintSuccessReponse(http.StatusCreated, "Added a new book successfully", ToResponse(res)))
 	}
 }
 

@@ -7,7 +7,7 @@ type Core struct {
 	Title string `validate:"required"`
 	Year int `validate:"required"`
 	Author string `validate:"required"`
-	Owner string
+	UserID uint
 }
 
 type BookHandler interface {

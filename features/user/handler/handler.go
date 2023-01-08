@@ -80,7 +80,7 @@ func (uc *userControll) Update() echo.HandlerFunc {
 			return c.JSON(PrintErrorResponse(err.Error()))
 		}
 
-		return c.JSON(http.StatusAccepted, ToResponse(res))
+		return c.JSON(PrintSuccessReponse(http.StatusAccepted, "Updated profile successfully", res))
 	}
 }
 

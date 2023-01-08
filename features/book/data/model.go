@@ -20,6 +20,7 @@ func ToCore(data Books) book.Core {
 		Title: data.Title,
 		Year: data.Year,
 		Author: data.Author,
+		UserID: data.UserID,
 	}
 }
 
@@ -29,5 +30,6 @@ func CoreToData(data book.Core) Books {
 		Title: data.Title,
 		Year: data.Year,
 		Author: data.Author,
+		UserID: data.UserID,
 	}
 }

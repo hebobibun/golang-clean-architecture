@@ -55,6 +55,13 @@ func (uq *userQuery) Update(updatedProfile user.Core) (user.Core, error) {
 	qry := uq.db.Model(Users{}).Where("id = ?", updatedProfile.ID).Updates(updatedProfile)
 	err := qry.Error
 
+	affRow := qry.RowsAffected
+
+	if affRow <= 0 {
+		log.Println("No rows affected")
+		return user.Core{}, errors.New("Failed to update, no new record or data not found")
+	}
+
 	if err != nil {
 		log.Println("update query error : ", err.Error())
 		return user.Core{}, errors.New("Unable to update profile")

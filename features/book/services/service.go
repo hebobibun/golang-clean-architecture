@@ -47,6 +47,8 @@ func (bs *bookSrv) Add(token interface{}, newBook book.Core) (book.Core, error) 
 		return book.Core{}, errors.New(msg)
 	}
 
+	res.UserID = uint(userID)
+
 	return res, nil
 }
 
