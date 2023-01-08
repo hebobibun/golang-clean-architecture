@@ -9,6 +9,13 @@ type BookResponse struct {
 	Author string`json:"author"`
 	UserID uint`json:"user_id"`
 }
+type AllBookResponse struct {
+	ID uint `json:"id"`
+	Title string `json:"title"`
+	Year int `json:"year"`
+	Author string`json:"author"`
+	Owner string`json:"owner"`
+}
 
 func ToResponse(data book.Core) BookResponse {
 	return BookResponse{
@@ -34,6 +41,24 @@ func ListCoreToResp(data []book.Core) []BookResponse{
 	var dataResp []BookResponse
 	for _, v := range data {
 		dataResp = append(dataResp, CoresToResponse(v))
+	}
+	return dataResp
+}
+
+func AllCoresToResponse(dataCore book.Core) AllBookResponse {
+	return AllBookResponse{
+		ID: dataCore.ID,
+		Title: dataCore.Title,
+		Year: dataCore.Year,
+		Author: dataCore.Author,
+		Owner: dataCore.Owner,
+	}
+}
+
+func AllListCoreToResp(data []book.Core) []AllBookResponse{
+	var dataResp []AllBookResponse
+	for _, v := range data {
+		dataResp = append(dataResp, AllCoresToResponse(v))
 	}
 	return dataResp
 }

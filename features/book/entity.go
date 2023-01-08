@@ -8,22 +8,26 @@ type Core struct {
 	Year int `validate:"required"`
 	Author string `validate:"required"`
 	UserID uint
+	Owner string
 }
 
 type BookHandler interface {
 	Add() echo.HandlerFunc
-	Show() echo.HandlerFunc
+	MyBook() echo.HandlerFunc
+	BookList() echo.HandlerFunc
 	Update() echo.HandlerFunc
 }
 
 type BookService interface {
 	Add(token interface{}, newBook Core) (Core, error)
-	Show(token interface{}) ([]Core, error)
+	MyBook(token interface{}) ([]Core, error)
+	BookList() ([]Core, error)
 	Update(token interface{}, bookID uint, updatedData Core) (Core, error)
 }
 
 type BookData interface {
 	Add(userID uint, newBook Core) (Core, error)
-	Show(userID uint) ([]Core, error)
+	MyBook(userID uint) ([]Core, error)
+	BookList() ([]Core, error)
 	Update(userID uint, bookID uint, updatedData Core) (Core, error)
 }

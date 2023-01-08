@@ -36,6 +36,7 @@ func main() {
 
 	e.POST("/register", userHdl.Register())
 	e.POST("/login", userHdl.Login())
+	e.GET("/books", bookHdl.BookList())
 
 	auth := e.Group("")
 	auth.Use(middleware.JWT([]byte(config.JWTKey)))
@@ -44,7 +45,7 @@ func main() {
 	auth.PATCH("/profile/update", userHdl.Update())
 	auth.DELETE("/profile/deactivate", userHdl.Deactivate())
 
-	auth.GET("/books/my", bookHdl.Show())
+	auth.GET("/books/my", bookHdl.MyBook())
 	auth.POST("/books/add", bookHdl.Add())
 	auth.PATCH("/books/update/:id", bookHdl.Update())
 

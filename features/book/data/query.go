@@ -32,10 +32,20 @@ func (bd *bookData) Add(userID uint, newBook book.Core) (book.Core, error) {
 	return newBook, nil
 }
 
-func (bd *bookData) Show(userID uint) ([]book.Core, error) {
+func (bd *bookData) BookList() ([]book.Core, error) {
+	res := []AllBooks{}
+	if err := bd.db.Table("books").Joins("JOIN users ON users.id = books.user_id").Select("books.id, books.title, books.year, books.author, users.name AS owner").Find(&res).Error; err != nil {
+		log.Println("Get all books query error : ", err.Error())
+		return []book.Core{}, err
+	}
+
+	return AllListToCore(res), nil
+}
+
+func (bd *bookData) MyBook(userID uint) ([]book.Core, error) {
 	res := []Books{}
 	if err := bd.db.Where("user_id = ?", userID).Find(&res).Error; err != nil {
-		log.Println("Get profile by ID query error : ", err.Error())
+		log.Println("Get book by ID query error : ", err.Error())
 		return []book.Core{}, err
 	}
 

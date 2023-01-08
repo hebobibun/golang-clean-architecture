@@ -52,14 +52,29 @@ func (bs *bookSrv) Add(token interface{}, newBook book.Core) (book.Core, error) 
 	return res, nil
 }
 
-func (bs *bookSrv) Show(token interface{}) ([]book.Core, error) {
+func (bs *bookSrv) BookList() ([]book.Core, error) {
+	res, err := bs.data.BookList()
+	if err != nil {
+		msg := ""
+		if strings.Contains(err.Error(), "not found") {
+			msg = "Book not found"
+		} else {
+			msg = "There's a server eror"
+		}
+		return []book.Core{}, errors.New(msg)
+	}
+
+	return res, nil
+}
+
+func (bs *bookSrv) MyBook(token interface{}) ([]book.Core, error) {
 	userID := helper.ExtractToken(token)
 
 	if userID <= 0 {
 		return []book.Core{}, errors.New("User not found")
 	}
 
-	res, err := bs.data.Show(uint(userID))
+	res, err := bs.data.MyBook(uint(userID))
 	if err != nil {
 		msg := ""
 		if strings.Contains(err.Error(), "not found") {

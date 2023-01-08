@@ -39,11 +39,22 @@ func (bc *bookControll) Add() echo.HandlerFunc {
 	}
 }
 
-func (bc *bookControll) Show() echo.HandlerFunc {
+func (bc *bookControll) BookList() echo.HandlerFunc {
+	return func(c echo.Context) error {
+		res, err := bc.srv.BookList()
+		if err != nil {
+			return c.JSON(helper.PrintErrorResponse(err.Error()))
+		}
+
+		return c.JSON(helper.PrintSuccessReponse(http.StatusCreated, "Displayed all books successfully", AllListCoreToResp(res)))
+	}
+}
+
+func (bc *bookControll) MyBook() echo.HandlerFunc {
 	return func(c echo.Context) error {
 		token := c.Get("user")
 
-		res, err := bc.srv.Show(token)
+		res, err := bc.srv.MyBook(token)
 		if err != nil {
 			return c.JSON(helper.PrintErrorResponse(err.Error()))
 		}
