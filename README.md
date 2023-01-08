@@ -44,6 +44,18 @@ In this Golang REST API project, I am trying to follow clean architecture princi
 │   │   │   └── service_test.go
 │   │   │   └── service.go
 │   │   └── entity.go
+│   └── user
+│   │   └── data
+│   │   │   └── model.go
+│   │   │   └── query.go
+│   │   └── handler
+│   │   │   └── handler.go
+│   │   │   └── request.go
+│   │   │   └── response.go
+│   │   └── services
+│   │   │   └── service_test.go
+│   │   │   └── service.go
+│   │   └── entity.go
 └── helper
 │   └── jwt.go
 │   └── response.go
@@ -53,7 +65,7 @@ In this Golang REST API project, I am trying to follow clean architecture princi
 ├── LICENSE
 ├── local.env.example
 ├── main.go
-├── README.md
+└── README.md
 ```
 
 ## How to Install
