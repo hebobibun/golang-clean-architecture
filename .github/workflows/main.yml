@@ -14,7 +14,7 @@ jobs:
         key: ${{ secrets.KEY }}
         port: ${{ secrets.PORT }}
         script: |
-          echo "test auto lage" >> auto.txt
+          echo "test auto lage bos" >> auto.txt
           cd project/golang-clean-architecture
           git pull origin main
           docker rmi archi-img
