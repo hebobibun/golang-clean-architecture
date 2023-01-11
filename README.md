@@ -22,9 +22,11 @@ In this Golang REST API project, I am trying to follow clean architecture princi
 # Tools & Requirements
 
 - Go 1.19.x
+- Viper 
 - Gorm & MySQL
 - Echo v4
 - JWT
+
 
 ## Folder Structure Pattern
 ```
