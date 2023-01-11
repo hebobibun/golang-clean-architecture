@@ -21,5 +21,5 @@ jobs:
           docker build -t archi-img .
           docker stop archi-cont
           docker rm archi-cont
-          docker run --name archi-cont -e DBUSER=${{ secrets.DBUSER }} -e DBPASS=${{ secrets.DBPASS }} -e DBHOST=${{ secrets.DBHOST }} -e DBPORT=${{ secrets.DBPORT }} -e DBNAME=${{ secrets.DBNAME }} -e JWTKEY=${{ secrets.JWTKEY }} --link ${{ secrets.DBNAME }} -d -p 8000:8000 archi-img
+          docker run --name archi-cont -e DBUSER=${{ secrets.DBUSER }} -e DBPASS=${{ secrets.DBPASS }} -e DBHOST=${{ secrets.DBHOST }} -e DBPORT=${{ secrets.DBPORT }} -e DBNAME=${{ secrets.DBNAME }} -e JWTKEY=${{ secrets.JWTKEY }} --link mysqlku -d -p 8000:8000 archi-img
 
