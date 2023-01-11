@@ -14,6 +14,8 @@ jobs:
         key: ${{ secrets.KEY }}
         port: ${{ secrets.PORT }}
         script: |
+          touch auto.txt
+          echo "masuk gan" >> auto.txt
           cd project/golang-clean-architecture
           git pull origin main
           docker rmi archi-img
