@@ -14,5 +14,8 @@ jobs:
         key: ${{ secrets.KEY }}
         port: ${{ secrets.PORT }}
         script: |
-          touch res.txt
-          echo "Hello from githubAction" >> res.txt
+          cd project/golang-clean-architecture
+          git pull origin main
+          
+          docker build -t archi .
+
