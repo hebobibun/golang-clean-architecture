@@ -1,11 +1,32 @@
-name: remote ssh command
-on: [push]
+on: 
+  push:
+    branches:
+      - main
 jobs:
-
   build:
     name: Build
     runs-on: ubuntu-latest
     steps:
+    - 
+      name: Checkout
+      uses: actions/checkout@v3
+    -
+      name: Login to Docker Hub
+      uses: docker/login-action@v2
+      with:
+        username: ${{ secrets.DOCKER_USER }}
+        password: ${{ secrets.DOCKER_TOKEN }}
+    -
+      name: Set up Docker Buildx
+      uses: docker/setup-buildx-action@v2
+    -
+      name: Build and push
+      uses: docker/build-push-action@v3
+      with:
+          context: .
+          file: ./Dockerfile
+          push: true
+          tags: ${{ secrets.DOCKER_USER }}/archi-img:latest          
     - name: executing remote ssh commands using password
       uses: appleboy/ssh-action@v0.1.7
       with:
@@ -14,11 +35,9 @@ jobs:
         key: ${{ secrets.KEY }}
         port: ${{ secrets.PORT }}
         script: |
-          echo "test auto lage bos" >> auto.txt
-          cd project/golang-clean-architecture
-          git pull origin main
-          docker rmi archi-img
-          docker build -t archi-img .
+          touch works.txt
+          docker rmi ${{ secrets.DOCKER_USER }}/archi-img
+          docker pull ${{ secrets.DOCKER_USER }}/archi-img
           docker stop archi-cont
           docker rm archi-cont
           docker run --name archi-cont -e DBUSER=${{ secrets.DBUSER }} -e DBPASS=${{ secrets.DBPASS }} -e DBHOST=${{ secrets.DBHOST }} -e DBPORT=${{ secrets.DBPORT }} -e DBNAME=${{ secrets.DBNAME }} -e JWTKEY=${{ secrets.JWTKEY }} --link mysqlku -d -p 8000:8000 archi-img
