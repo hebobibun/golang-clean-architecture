@@ -36,7 +36,7 @@ jobs:
         port: ${{ secrets.PORT }}
         script: |
           touch works.txt
-          echo "hello again" >> works.txt
+          echo "hello from github" >> works.txt
           sudo chmod 777 /var/run/docker.sock
           docker rmi ${{ secrets.DOCKER_USER }}/archi-img
           docker pull ${{ secrets.DOCKER_USER }}/archi-img
