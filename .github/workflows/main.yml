@@ -36,6 +36,7 @@ jobs:
         port: ${{ secrets.PORT }}
         script: |
           touch works.txt
+          echo "hello again" >> works.txt
           docker rmi ${{ secrets.DOCKER_USER }}/archi-img
           docker pull ${{ secrets.DOCKER_USER }}/archi-img
           docker stop archi-cont
